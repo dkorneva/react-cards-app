@@ -95,6 +95,11 @@ p {
   margin: 0;
 }
 
+.completed {
+  background-color: darkolivegreen;
+  color:#fff
+}
+
 code,
 .counter {
   font-family: var(--mono);

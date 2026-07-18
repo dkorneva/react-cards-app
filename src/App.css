@@ -17,6 +17,10 @@
   }
 }
 
+.btn {
+  color: blue;
+}
+
 .hero {
   position: relative;
 
@@ -135,6 +139,7 @@
       width: 18px;
     }
   }
+
 
   @media (max-width: 1024px) {
     margin-top: 20px;
