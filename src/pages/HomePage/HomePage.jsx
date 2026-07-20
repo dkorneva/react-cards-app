@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 // import cls from "./HomePage.module.css"
 import { QuestionCard } from "../../components/QuestionCard";
 import { API_URL } from "../../constants";
+import { QuestionCardList } from "../../components/QuestionCardList";
 
 export const HomePage = () => {
   const [questions, setQuestions] = useState([]);
@@ -32,9 +33,10 @@ export const HomePage = () => {
     // но в react есть концепция виртуального родительского класса - react fragment
     // ниже представлен вариант без импортов, но есть также варианты с тегами React.Fragment или Fragment
     <> 
-    {questions.map((card, index) => {
+    {/* {questions.map((card, index) => {
       return <QuestionCard card={card} key={index}/>
-    })}
+    })} */}
+    <QuestionCardList cards={questions}/>
     </>
   );
 }
