@@ -5,6 +5,8 @@ import { API_URL } from "../../constants";
 import { QuestionCardList } from "../../components/QuestionCardList";
 import { Loader } from '../../components/Loader';
 import { useFetch } from "../../hooks/useFetch";
+import { SearchInput } from "../../components/SearchInput";
+import cls from "./HomePage.module.css"
 
 export const HomePage = () => {
   // большинство хуков React можно вызвать только на верхнем уровне
@@ -54,7 +56,9 @@ export const HomePage = () => {
       return <QuestionCard card={card} key={index}/>
     })} */}
 			{/* <input type="text" ref={inputRef}/> неуправляемый input, для получения значения используется ref */}
-			<input type='text' value={searchValue} onChange={onSearchChangeValueHandler} />
+			<div className={cls.controlsContainer}>
+        <SearchInput value={searchValue} onChange={onSearchChangeValueHandler}/>
+      </div>
 			{isLoading && <Loader />}
 			{error && <p>{error}</p>}
 			<QuestionCardList cards={questions} />
