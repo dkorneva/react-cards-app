@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { QuestionCard } from "../../components/QuestionCard";
 import { API_URL } from "../../constants";
 import { QuestionCardList } from "../../components/QuestionCardList";
+import { Loader } from '../../components/Loader'
 
 export const HomePage = () => {
   const [questions, setQuestions] = useState([]);
@@ -36,6 +37,7 @@ export const HomePage = () => {
     {/* {questions.map((card, index) => {
       return <QuestionCard card={card} key={index}/>
     })} */}
+    <Loader/>
     <QuestionCardList cards={questions}/>
     </>
   );
