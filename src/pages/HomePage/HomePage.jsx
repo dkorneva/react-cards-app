@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 // import cls from "./HomePage.module.css"
 import { QuestionCard } from "../../components/QuestionCard";
 import { API_URL } from "../../constants";
@@ -31,6 +31,12 @@ export const HomePage = () => {
     return questions;
   })
 
+  const cards = useMemo(() => {
+    return questions.filter(d =>
+			d.question.toLowerCase().includes(searchValue.trim().toLowerCase()),
+		)
+  }, [questions, searchValue]) 
+
   // useEffect ничего не возваращает, в качестве параметров у него callback-функция и массив зависимостей, при которых callback-функция будет отрабатывать, если оставить массив зависимостей пустым, callback-функция отработает один раз - когда смонтируется компонент
   useEffect(() => {
     getQuestions("react");
@@ -61,7 +67,9 @@ export const HomePage = () => {
       </div>
 			{isLoading && <Loader />}
 			{error && <p>{error}</p>}
-			<QuestionCardList cards={questions} />
+      {cards.length === 0 && <p className={cls.noCardsInfo}>No cards...</p>}
+
+			<QuestionCardList cards={cards} />
 		</>
 	)
 }
