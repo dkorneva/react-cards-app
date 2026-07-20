@@ -3,27 +3,30 @@ import { useEffect, useState } from "react";
 import { QuestionCard } from "../../components/QuestionCard";
 import { API_URL } from "../../constants";
 import { QuestionCardList } from "../../components/QuestionCardList";
-import { Loader } from '../../components/Loader'
+import { Loader } from '../../components/Loader';
+import { useFetch } from "../../hooks/useFetch";
 
 export const HomePage = () => {
+  // большинство хуков React можно вызвать только на верхнем уровне
+  // т.е., например, нельзя вызвать useState внутри getQuestions
   const [questions, setQuestions] = useState([]);
 
-  const getQuestions = async () => {
-		try {
-      const response = await fetch(`${API_URL}/react`);
-      const questions = await response.json();
+  const [getQuestions, isLoading, error] = useFetch(async (url) => {
+    const response = await fetch(`${API_URL}/${url}`);
 
-      setQuestions(questions);
-
-      console.log("questions", questions);
-		} catch (error) {
-      console.error(error)
+    if (!response.ok) {
+      throw new Error(`Ошибка загрузки: ${response.status}`);
     }
-	}
+
+    const questions = await response.json();
+
+    setQuestions(questions);
+    return questions;
+  })
 
   // useEffect ничего не возваращает, в качестве параметров у него callback-функция и массив зависимостей, при которых callback-функция будет отрабатывать, если оставить массив зависимостей пустым, callback-функция отработает один раз - когда смонтируется компонент
   useEffect(() => {
-    getQuestions();
+    getQuestions("react1");
   }, [])
 
   // getQuestions(); // при вызове таким образом, будет двойной рендер - по количеству запросов, этого можно и нужно избежать при помощи хука useEffect;
@@ -37,7 +40,8 @@ export const HomePage = () => {
     {/* {questions.map((card, index) => {
       return <QuestionCard card={card} key={index}/>
     })} */}
-    <Loader/>
+    {isLoading && <Loader/>}
+    {error && <p>{error}</p>}
     <QuestionCardList cards={questions}/>
     </>
   );
