@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 // import cls from "./HomePage.module.css"
 import { QuestionCard } from "../../components/QuestionCard";
 import { API_URL } from "../../constants";
@@ -10,6 +10,11 @@ export const HomePage = () => {
   // большинство хуков React можно вызвать только на верхнем уровне
   // т.е., например, нельзя вызвать useState внутри getQuestions
   const [questions, setQuestions] = useState([]);
+  const [searchValue, setSearchValue] = useState(""); // управляемый input 
+
+  // const inputRef = useRef(); // данная ссылка не является состоянием, а представлет из себя ссылку на какой-то элемент, значение данного элемента сохраняется между перерисовками, оно постоянное и не будет сбрасываться
+  // с помощью данного референса можно также управлять скроллом, получать данные у input (например, делать какую-либо константу)
+  // данный способ является прямой альтернативой selectQuery из JS
 
   const [getQuestions, isLoading, error] = useFetch(async (url) => {
     const response = await fetch(`${API_URL}/${url}`);
@@ -31,18 +36,28 @@ export const HomePage = () => {
 
   // getQuestions(); // при вызове таким образом, будет двойной рендер - по количеству запросов, этого можно и нужно избежать при помощи хука useEffect;
 
+  // const testRefHandler = () => {
+  //   console.log("Ref", inputRef.current.value)
+  // }
+
+  const onSearchChangeValueHandler = (e) => {
+    setSearchValue(e.target.value);
+  }
+
   return (
-    // в react обязателен родительский элемент, в который оборачиваются дочерние элементы
-    // в данном случае таким элементом служит div с классом test-class, удалить его нельзя
-    // но в react есть концепция виртуального родительского класса - react fragment
-    // ниже представлен вариант без импортов, но есть также варианты с тегами React.Fragment или Fragment
-    <> 
-    {/* {questions.map((card, index) => {
+		// в react обязателен родительский элемент, в который оборачиваются дочерние элементы
+		// в данном случае таким элементом служит div с классом test-class, удалить его нельзя
+		// но в react есть концепция виртуального родительского класса - react fragment
+		// ниже представлен вариант без импортов, но есть также варианты с тегами React.Fragment или Fragment
+		<>
+			{/* {questions.map((card, index) => {
       return <QuestionCard card={card} key={index}/>
     })} */}
-    {isLoading && <Loader/>}
-    {error && <p>{error}</p>}
-    <QuestionCardList cards={questions}/>
-    </>
-  );
+			{/* <input type="text" ref={inputRef}/> неуправляемый input, для получения значения используется ref */}
+			<input type='text' value={searchValue} onChange={onSearchChangeValueHandler} />
+			{isLoading && <Loader />}
+			{error && <p>{error}</p>}
+			<QuestionCardList cards={questions} />
+		</>
+	)
 }
