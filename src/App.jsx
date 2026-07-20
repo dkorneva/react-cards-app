@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { MainLayout } from './components/MainLayout'
 import { HomePage } from './pages/HomePage'
+import { NotFoundPage } from './pages/NotFoundPage'
 
 function App() {
   return (
@@ -12,6 +13,11 @@ function App() {
         <Route path="/main" element={<div>main component</div>} />
         <Route path="/forbidden" element={<div>forbidden</div>} />
         <Route path="/addquestion" element={<div>add question</div>} />
+        {/* для динамики в react-router необходимо поставить :id, т.е. связываем задекларированный маршрут с конкретным маршрутом из QuestionCard*/}
+        <Route path="/question/:id" element={<div>QUESTION PAGE</div>} />
+
+        {/* path="*" необходим для всех остальных маршрутов, которые не были задекларированы */}
+        <Route path="*" element={<NotFoundPage/>}></Route>
       </Route>
     </Routes>
   </BrowserRouter>)
