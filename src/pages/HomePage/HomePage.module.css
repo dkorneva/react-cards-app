@@ -14,3 +14,21 @@
   margin: 0 auto;
   
 }
+
+.select {
+  height: 40px;
+  border-radius: 10px;
+  padding: 5px;
+  background-color: var(--card-bg-color);
+  border: none;
+  outline: none;
+  color: var(--text-color);
+  flex-grow: 1;
+}
+
+/* если ширина viewport становится равной 576px, к классу controlsContainer применяется flez-wrap */
+@media (max-width: 576px) {
+  .controlsContainer {
+    flex-wrap: wrap-reverse;
+  }
+}

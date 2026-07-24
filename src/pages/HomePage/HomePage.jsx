@@ -13,6 +13,7 @@ export const HomePage = () => {
   // т.е., например, нельзя вызвать useState внутри getQuestions
   const [questions, setQuestions] = useState([]);
   const [searchValue, setSearchValue] = useState(""); // управляемый input 
+  const [sortSelectValue, setSortSelectValue] = useState("");
 
   // const inputRef = useRef(); // данная ссылка не является состоянием, а представлет из себя ссылку на какой-то элемент, значение данного элемента сохраняется между перерисовками, оно постоянное и не будет сбрасываться
   // с помощью данного референса можно также управлять скроллом, получать данные у input (например, делать какую-либо константу)
@@ -39,8 +40,8 @@ export const HomePage = () => {
 
   // useEffect ничего не возваращает, в качестве параметров у него callback-функция и массив зависимостей, при которых callback-функция будет отрабатывать, если оставить массив зависимостей пустым, callback-функция отработает один раз - когда смонтируется компонент
   useEffect(() => {
-    getQuestions("react");
-  }, [])
+    getQuestions(`react?${sortSelectValue}`);
+  }, [sortSelectValue])
 
   // getQuestions(); // при вызове таким образом, будет двойной рендер - по количеству запросов, этого можно и нужно избежать при помощи хука useEffect;
 
@@ -50,6 +51,10 @@ export const HomePage = () => {
 
   const onSearchChangeValueHandler = (e) => {
     setSearchValue(e.target.value);
+  }
+
+  const onSortSelectChangeHandler = (e) => {
+    setSortSelectValue(e.target.value);
   }
 
   return (
@@ -64,6 +69,15 @@ export const HomePage = () => {
 			{/* <input type="text" ref={inputRef}/> неуправляемый input, для получения значения используется ref */}
 			<div className={cls.controlsContainer}>
         <SearchInput value={searchValue} onChange={onSearchChangeValueHandler}/>
+
+        <select value={sortSelectValue} onChange={onSortSelectChangeHandler} className={cls.select}>
+          <option value="">sortby</option>
+          <hr />
+          <option value="_sort=level">level ASC</option>
+          <option value="_sort=-level">level DESC</option>
+          <option value="_sort=completed">completed ASC</option>
+          <option value="_sort=-completed">completed DESC</option>
+        </select>
       </div>
 			{isLoading && <Loader />}
 			{error && <p>{error}</p>}
