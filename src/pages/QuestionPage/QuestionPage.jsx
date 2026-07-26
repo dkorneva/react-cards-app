@@ -27,6 +27,10 @@ export const QuestionPage = () => {
 		const response = await fetch(`${API_URL}/react/${id}`);
 		const data = await response.json();
 
+		if(!response.ok) {
+			throw new Error(response.statusText);
+		}
+
 		setCard(data);
 	}) 
 
@@ -35,6 +39,11 @@ export const QuestionPage = () => {
 			method: "PATCH",
 			body: JSON.stringify({completed: isChecked}),
 		});
+
+		if(!response.ok) {
+			throw new Error(response.statusText);
+		}
+
 		const data = await response.json();
 
 		setCard(data);
