@@ -43,19 +43,19 @@ body {
     --main-bg-color: #fff;
     --text-color: #000;
 
-    --btn-bg-color: #16444f;
-    --btn-text-color: #57C3DC;
+    --btn-bg-color: #383b3f;
+    --btn-text-color: #fff;
 
     --card-bg-color: #ebedf0;
   }
 }
-@media (prefers-color-scheme: light) {
+@media (prefers-color-scheme: dark) {
   :root {
     --main-bg-color: #23272F;
     --text-color: #fff;
 
-    --btn-bg-color: #383b3f;
-    --btn-text-color: #fff;
+    --btn-bg-color: #16444f;
+    --btn-text-color: #57C3DC;
 
     --card-bg-color: #343a46;
   }
