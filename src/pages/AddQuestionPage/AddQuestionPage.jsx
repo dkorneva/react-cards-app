@@ -4,6 +4,7 @@ import {Button} from "../../components/Button"
 import { delayFn } from '../../helpers/delayFn'
 import { toast } from 'react-toastify'
 import { API_URL } from '../../constants'
+import { Loader } from '../../components/Loader'
 
 // createCardAction по умолчанию принимает 2 аргумента, потому что под капотом useActionState кладёт в эту функцию именно 2 аргумента
 // _prevState с нижним подчёркиванием, потому что это значение будет не нужно в данном случае
@@ -58,6 +59,8 @@ export const AddQuestionPage = () => {
 
 	return (
 		<>
+    {isPending && <Loader/>}
+
 			<h1 className={cls.formTitle}>Add new question</h1>
 
 			<div className={cls.formContainer}>
@@ -108,7 +111,6 @@ export const AddQuestionPage = () => {
 							id='resourcesField'
 							cols='30'
 							rows='2'
-							required
 							placeholder='please enter resources separated by commas'
 						></textarea>
 					</div>
