@@ -4,6 +4,7 @@ import { HomePage } from './pages/HomePage'
 import { NotFoundPage } from './pages/NotFoundPage'
 import { QuestionPage } from './pages/QuestionPage'
 import { AddQuestionPageLazy } from './pages/AddQuestionPage'
+import { EditQuestionPage } from './pages/EditQuestionPage'
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
 					<Route path='/addquestion' element={<AddQuestionPageLazy/>} />
 					{/* для динамики в react-router необходимо поставить :id, т.е. связываем задекларированный маршрут с конкретным маршрутом из QuestionCard*/}
 					<Route path='/question/:id' element={<QuestionPage />} />
-					<Route path='/editqestion/:id' element={<div>Edit Question</div>}></Route>
+					<Route path='/editquestion/:id' element={<EditQuestionPage/>}></Route>
 
 					{/* path="*" необходим для всех остальных маршрутов, которые не были задекларированы */}
 					<Route path='*' element={<NotFoundPage />}></Route>

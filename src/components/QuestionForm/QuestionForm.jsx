@@ -5,6 +5,8 @@ import {Button} from "../Button"
 export const QuestionForm = ({formAction, state, isPending, submitBtnText}) => {
   return (
 		<form action={formAction} className={cls.form}>
+      <input type="text" name="questionId" defaultValue={state.id} hidden /> {/* данный скрытый инпут необходим для того, чтобы достать по нему id вопроса, поскольку в качестве пропса в EditQuestion передаётся id */}
+
 			<div className={cls.formControl}>
 				<label htmlFor='questionField'>Question: </label>
 				<textarea
