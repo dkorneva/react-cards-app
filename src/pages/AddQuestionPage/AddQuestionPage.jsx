@@ -48,7 +48,7 @@ const createCardAction = async (_prevState, formData) => {
 	}
 }
 
-export const AddQuestionPage = () => {
+const AddQuestionPage = () => {
 	// const [formState, formAction, isPending] = useActionState(fn, initialState);
 	// useActionState возвращает кортеж:
 	// 1) formState изначально равен initialState, а после отправки формы он будет равен значению, которая вернёт функция fn, переданная в useActionState
@@ -142,3 +142,5 @@ export const AddQuestionPage = () => {
 		</>
 	)
 }
+
+export default AddQuestionPage;
