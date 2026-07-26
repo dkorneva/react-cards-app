@@ -85,5 +85,5 @@
 .checkbox {
   width: 18px;
   height: 18px;
-  accent-color: #16c47f;
+  accent-color: var(--green-color);
 }

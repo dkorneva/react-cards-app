@@ -3,6 +3,7 @@ import { MainLayout } from './components/MainLayout'
 import { HomePage } from './pages/HomePage'
 import { NotFoundPage } from './pages/NotFoundPage'
 import { QuestionPage } from './pages/QuestionPage'
+import { AddQuestionPage } from './pages/AddQuestionPage'
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
 					<Route path='/' element={<HomePage />} />
 					<Route path='/main' element={<div>main component</div>} />
 					<Route path='/forbidden' element={<div>forbidden</div>} />
-					<Route path='/addquestion' element={<div>add question</div>} />
+					<Route path='/addquestion' element={<AddQuestionPage/>} />
 					{/* для динамики в react-router необходимо поставить :id, т.е. связываем задекларированный маршрут с конкретным маршрутом из QuestionCard*/}
 					<Route path='/question/:id' element={<QuestionPage />} />
 					<Route path='/editqestion/:id' element={<div>Edit Question</div>}></Route>
