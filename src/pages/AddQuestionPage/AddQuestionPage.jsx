@@ -31,13 +31,20 @@ const createCardAction = async (_prevState, formData) => {
       })
     })
 
+    console.log("response", response)
+
+    if(response.status === 404) {
+      throw new Error(response.statusText)
+    }
+
     const question = await response.json();
     toast.success("New question is successfully created!")
 
     return isClearForm ? {} : question; // когда выполнена отправка на сервер, отработал action (createCardAction), если ничего не возвращать, то следующий formState в useActionState становится undefined, поэтому обязательно должно что-то возвращаться
   } catch (error) {
-    toast.error(error.message)
-  }
+		toast.error(error.message)
+		return {} // значение возвращается, только если выполняется условие isClearForm ? {} : question;, из-за этого возникает ошибка, что question может быть undefined
+	}
 }
 
 export const AddQuestionPage = () => {
