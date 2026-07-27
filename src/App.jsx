@@ -15,6 +15,7 @@ import { EditQuestionPageLazy } from './pages/EditQuestionPage'
 import { AuthProvider } from './auth/AuthProvider'
 import { useAuth } from './hooks/useAuth'
 import { ForbiddenPage } from './pages/ForbiddenPage'
+import { ThemeProvider } from './theme'
 
 const ProtectedRoutes = () => {
 	const {isAuth} = useAuth();
@@ -27,32 +28,34 @@ const ProtectedRoutes = () => {
 
 function App() {
 	return (
-		// после оборачивания в AuthProvider для каждой страницы будет доступно состояние [isAuth, setIsAuth]
-		<AuthProvider>
-			<BrowserRouter>
-				<Routes>
-					{/* MainLayout - самый главный с точки зрения разметки всего приложения */}
-					<Route element={<MainLayout />}>
-						<Route path='/' element={<HomePage />} />
-						<Route path='/main' element={<div>main component</div>} />
-						<Route path='/forbidden' element={<ForbiddenPage />}/>
-						{/* для динамики в react-router необходимо поставить :id, т.е. связываем задекларированный маршрут с конкретным маршрутом из QuestionCard*/}
-						<Route path='/question/:id' element={<QuestionPage />} />
+		<ThemeProvider>
+			{/* // после оборачивания в AuthProvider для каждой страницы будет доступно состояние [isAuth, setIsAuth] */}
+			<AuthProvider>
+				<BrowserRouter>
+					<Routes>
+						{/* MainLayout - самый главный с точки зрения разметки всего приложения */}
+						<Route element={<MainLayout />}>
+							<Route path='/' element={<HomePage />} />
+							<Route path='/main' element={<div>main component</div>} />
+							<Route path='/forbidden' element={<ForbiddenPage />}/>
+							{/* для динамики в react-router необходимо поставить :id, т.е. связываем задекларированный маршрут с конкретным маршрутом из QuestionCard*/}
+							<Route path='/question/:id' element={<QuestionPage />} />
 
-						<Route element={<ProtectedRoutes />}>
-							<Route path='/addquestion' element={<AddQuestionPageLazy />} />
-							<Route
-								path='/editquestion/:id'
-								element={<EditQuestionPageLazy />}
-							></Route>
+							<Route element={<ProtectedRoutes />}>
+								<Route path='/addquestion' element={<AddQuestionPageLazy />} />
+								<Route
+									path='/editquestion/:id'
+									element={<EditQuestionPageLazy />}
+								></Route>
+							</Route>
+
+							{/* path="*" необходим для всех остальных маршрутов, которые не были задекларированы */}
+							<Route path='*' element={<NotFoundPage />}></Route>
 						</Route>
-
-						{/* path="*" необходим для всех остальных маршрутов, которые не были задекларированы */}
-						<Route path='*' element={<NotFoundPage />}></Route>
-					</Route>
-				</Routes>
-			</BrowserRouter>
-		</AuthProvider>
+					</Routes>
+				</BrowserRouter>
+			</AuthProvider>
+		</ThemeProvider>
 	)
 }
 

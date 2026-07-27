@@ -1,66 +1,77 @@
 :root {
-  --main-bg-color: #23272F;
+	--main-bg-color: #23272f;
 
-  --text-color: #fff;
+	--text-color: #fff;
 
-  --btn-bg-color: #383b3f;
-  --btn-text-color: #fff;
+	--btn-bg-color: #383b3f;
+	--btn-text-color: #fff;
 
-  --card-bg-color: #343a46;
-  --green-color: #219679;
+	--card-bg-color: #343a46;
+	--green-color: #219679;
 
-  font-family: Inter, system-ui, Avenir, Arial, Helvetica, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+	font-family: Inter, system-ui, Avenir, Arial, Helvetica, sans-serif;
+	line-height: 1.5;
+	font-weight: 400;
 
-  color-scheme: light dark;
-  background-color: #242424;
+	color-scheme: light dark;
+	background-color: #242424;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
 a {
-  color: inherit;
+	color: inherit;
 }
 
 body {
-  color: var(--text-color);
-  background-color: var(--main-bg-color);
+	color: var(--text-color);
+	background-color: var(--main-bg-color);
 }
+
+.darkLayout {
+	--main-bg-color: #23272f;
+	--text-color: #fff;
+
+	--btn-bg-color: #16444f;
+	--btn-text-color: #57c3dc;
+
+	--card-bg-color: #343a46;
+	--green-color: #219679;
+}
+
 /* медиазапрос, который проверяет цветовую тему, выбранную у пользователя в системе или браузере
 @media позволяет применять CSS только при определённом условии
 (prefers-color-scheme: light) означает: применить стили, если у пользователя в системе или браузере выбрана светлая тема */
 @media (prefers-color-scheme: light) {
-  :root {
-    --main-bg-color: #fff;
-    --text-color: #000;
+	:root {
+		--main-bg-color: #fff;
+		--text-color: #000;
 
-    --btn-bg-color: #383b3f;
-    --btn-text-color: #fff;
+		--btn-bg-color: #383b3f;
+		--btn-text-color: #fff;
 
-    --card-bg-color: #ebedf0;
-    --green-color: #219679;
-  }
+		--card-bg-color: #ebedf0;
+		--green-color: #219679;
+	}
 }
 @media (prefers-color-scheme: dark) {
-  :root {
-    --main-bg-color: #23272F;
-    --text-color: #fff;
+	:root {
+		--main-bg-color: #23272f;
+		--text-color: #fff;
 
-    --btn-bg-color: #16444f;
-    --btn-text-color: #57C3DC;
+		--btn-bg-color: #16444f;
+		--btn-text-color: #57c3dc;
 
-    --card-bg-color: #343a46;
-    --green-color: #219679;
-  }
+		--card-bg-color: #343a46;
+		--green-color: #219679;
+	}
 }
-
