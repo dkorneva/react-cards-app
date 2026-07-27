@@ -4,8 +4,9 @@ import { Badge } from '../../components/Badge'
 import { Button } from '../../components/Button'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useFetch } from '../../hooks/useFetch'
-import { API_URL } from '../../constants'
+import { API_URL, AUTH_STORAGE } from '../../constants'
 import { Loader, SmallLoader } from '../../components/Loader'
+import { useAuth } from '../../hooks/useAuth' 
 
 // поскольку QuestionPage является страницей, она не имеет ни одного пропса
 export const QuestionPage = () => {
@@ -14,6 +15,7 @@ export const QuestionPage = () => {
 	const {id} = useParams();
 	const [card, setCard] = useState(null)
 	const [isChecked, setIsChecked] = useState(true)
+	const {isAuth, setIsAuth} = useAuth()
 
 
 	const levelVariant = () => { return card.level === 1 && card !== null
@@ -118,9 +120,9 @@ export const QuestionPage = () => {
 						{isCardUpdating && <SmallLoader/>}
 					</label>
 
-					<Button onClick={() => navigate(`/editquestion/${card.id}`)} isDisabled={isCardUpdating}>
+					{isAuth && <Button onClick={() => navigate(`/editquestion/${card.id}`)} isDisabled={isCardUpdating}>
 						Edit
-					</Button>
+					</Button>}
 					<Button onClick={() => navigate('/')} isDisabled={isCardUpdating}>Back</Button>
 				</div>
 			)}
