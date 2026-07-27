@@ -5,7 +5,7 @@ import { API_URL } from '../../constants'
 import { Loader } from '../../components/Loader'
 import { EditQuestion } from './EditQuestion';
 
-export const EditQuestionPage = () => {
+const EditQuestionPage = () => {
 	const { id } = useParams() // вытягиваем id конкретного вопроса, чтобы заполнить данные формы по этому запросу
 	const [question, setQuestion] = useState(null) // от null хорошо писать логику, чтобы проверять наличие данных
 
@@ -27,3 +27,5 @@ export const EditQuestionPage = () => {
 		</>
 	)
 }
+
+export default EditQuestionPage
