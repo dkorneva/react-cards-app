@@ -17,7 +17,7 @@ export const ThemeToggler = () => {
 	}
 
 	return (
-		<label for='theme' className={cls.theme}>
+		<label htmlFor='theme' className={cls.theme}>
 			<span className={cls.themeToggleWrap}>
 				<input
 					id='theme'
@@ -30,16 +30,21 @@ export const ThemeToggler = () => {
 					checked={theme === "dark"}
 				/>
 				<span className={cls.themeFill}></span>
-				<span className={cls.themeIcon}>
-					<span className={cls.themeIconPart}></span>
-					<span className={cls.themeIconPart}></span>
-					<span className={cls.themeIconPart}></span>
-					<span className={cls.themeIconPart}></span>
-					<span className={cls.themeIconPart}></span>
-					<span className={cls.themeIconPart}></span>
-					<span className={cls.themeIconPart}></span>
-					<span className={cls.themeIconPart}></span>
-					<span className={cls.themeIconPart}></span>
+				<span className={cls.themeKnob}>
+					<span className={cls.themeIcon}>
+						<span className={cls.sunIcon}>
+							<span className={cls.sunIconPart}></span>
+							<span className={cls.sunIconPart}></span>
+							<span className={cls.sunIconPart}></span>
+							<span className={cls.sunIconPart}></span>
+							<span className={cls.sunIconPart}></span>
+							<span className={cls.sunIconPart}></span>
+							<span className={cls.sunIconPart}></span>
+							<span className={cls.sunIconPart}></span>
+							<span className={cls.sunIconPart}></span>
+						</span>
+						<span className={cls.moonIcon}></span>
+					</span>
 				</span>
 			</span>
 		</label>
