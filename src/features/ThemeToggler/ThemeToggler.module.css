@@ -194,7 +194,7 @@
 }
 
 .themeToggleWrap {
-	margin: 0 0.75em;
+	margin: 0;
 }
 
 @supports selector(:focus-visible) {
@@ -205,4 +205,23 @@
 	.themeToggle:focus-visible {
 		box-shadow: 0 0 0 0.125em var(--primary);
 	}
+}
+
+@media (max-width: 520px) {
+  .header {
+    padding: 8px 12px;
+  }
+
+  .header p span {
+    display: none;
+  }
+
+  .headerButtons {
+    gap: 8px;
+    flex-shrink: 0;
+  }
+	.themeToggleWrap {
+    transform: scale(0.8);
+    transform-origin: center;
+  }
 }
