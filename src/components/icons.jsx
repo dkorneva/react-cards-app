@@ -13,7 +13,7 @@ export const SearchIcon = (props) => {
 				fill='none'
 				strokeWidth='2'
 				fillRule='evenodd'
-				strokLinecap='round'
+				strokeLinecap='round'
 				strokeLinejoin='round'
 			></path>
 		</svg>

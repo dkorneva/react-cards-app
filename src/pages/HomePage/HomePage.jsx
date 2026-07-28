@@ -1,6 +1,5 @@
 import { useEffect, useState, useRef, useMemo } from 'react'
 // import cls from "./HomePage.module.css"
-import { QuestionCard } from '../../components/QuestionCard'
 import { API_URL } from '../../constants'
 import { QuestionCardList } from '../../components/QuestionCardList'
 import { Loader } from '../../components/Loader'
