@@ -1,1 +1,0 @@
-export { default as EditQuestionPageLazy } from "./EditQuestionPage.lazy";
