@@ -10,7 +10,9 @@
     "preview": "vite preview",
     "server": "json-server --watch src/db.json -p 8801",
     "server:help": "json-server --help",
-    "start:app": "concurrently \"npm run server\" \"npm run dev\""
+    "start:app": "concurrently \"npm run server\" \"npm run dev\"",
+    "types:check": "tsc --noEmit -p tsconfig.app.json",
+    "prepare": "husky"
   },
   "dependencies": {
     "react": "^19.2.7",
@@ -29,6 +31,7 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.3",
     "globals": "^17.7.0",
+    "husky": "^9.1.7",
     "json-server": "^1.0.0-beta.15",
     "typescript": "^7.0.2",
     "vite": "^8.1.1"
