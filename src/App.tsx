@@ -18,12 +18,16 @@ import { ForbiddenPage } from './pages/ForbiddenPage'
 import { ThemeProvider } from './theme'
 
 const ProtectedRoutes = () => {
-	const {isAuth} = useAuth();
-	const location = useLocation();
+	const { isAuth } = useAuth()
+	const location = useLocation()
 
 	// флаг replace очищает из истории страницу, которая была до forbidden (а обычно это запрещённая страница)
 	// между роутами можно обмениваться state с помощью react-router-dom
-	return isAuth ? <Outlet /> : <Navigate to='/forbidden' state={{from: location.pathname}} replace/>
+	return isAuth ? (
+		<Outlet />
+	) : (
+		<Navigate to='/forbidden' state={{ from: location.pathname }} replace />
+	)
 }
 
 function App() {
@@ -37,7 +41,7 @@ function App() {
 						<Route element={<MainLayout />}>
 							<Route path='/' element={<HomePage />} />
 							<Route path='/main' element={<div>main component</div>} />
-							<Route path='/forbidden' element={<ForbiddenPage />}/>
+							<Route path='/forbidden' element={<ForbiddenPage />} />
 							{/* для динамики в react-router необходимо поставить :id, т.е. связываем задекларированный маршрут с конкретным маршрутом из QuestionCard*/}
 							<Route path='/question/:id' element={<QuestionPage />} />
 
