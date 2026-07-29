@@ -26,6 +26,7 @@ export default defineConfig([
       "no-console": "warn",
       "react-refresh/only-export-components": ["warn", {allowConstantExport: true}],
 			"@typescript-eslint/no-explicit-any": "warn",
+			"@typescript-eslint/no-unused-expressions": "warn",
 			'prettier/prettier': [
 				'error',
 				{

@@ -1,14 +1,15 @@
-import {} from 'react'
+import { type ChangeEvent } from 'react'
 import cls from './ThemeToggler.module.css'
 import { useTheme } from '../../hooks/useTheme'
 import { THEME_STORAGE } from '../../constants';
+import { THEME_ENUM } from '../../types/global.types';
 
 export const ThemeToggler = () => {
 	const {theme, setTheme} = useTheme();
 
-	const onChangeHandler = (e) => {
+	const onChangeHandler = (e: ChangeEvent<HTMLInputElement>): void => {
 		const isChecked = e.target.checked === true;
-		const updatedTheme = isChecked ? "dark" : "light";
+		const updatedTheme = isChecked ? THEME_ENUM.DARK : THEME_ENUM.LIGHT;
 
 		setTheme(updatedTheme);
 		isChecked ? document.body.classList.add("darkLayout") : document.body.classList.remove("darkLayout")
@@ -27,7 +28,7 @@ export const ThemeToggler = () => {
 					name='theme'
 					value='dark'
 					onChange={onChangeHandler}
-					checked={theme === "dark"}
+					checked={theme === THEME_ENUM.DARK}
 				/>
 				<span className={cls.themeFill}></span>
 				<span className={cls.themeKnob}>
