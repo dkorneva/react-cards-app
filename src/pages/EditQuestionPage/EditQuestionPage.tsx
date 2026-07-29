@@ -4,10 +4,11 @@ import { useFetch } from '../../hooks/useFetch'
 import { API_URL } from '../../constants/global.constants'
 import { Loader } from '../../components/Loader'
 import { EditQuestion } from './EditQuestion'
+import type { IQuestionCard } from '../../types/global.types'
 
 const EditQuestionPage = () => {
 	const { id } = useParams() // вытягиваем id конкретного вопроса, чтобы заполнить данные формы по этому запросу
-	const [question, setQuestion] = useState(null) // от null хорошо писать логику, чтобы проверять наличие данных
+	const [question, setQuestion] = useState<IQuestionCard | null>(null) // от null хорошо писать логику, чтобы проверять наличие данных
 
 	const [fetchQuestion, isQuestionLoading] = useFetch(async () => {
 		const response = await fetch(`${API_URL}/react/${id}`)

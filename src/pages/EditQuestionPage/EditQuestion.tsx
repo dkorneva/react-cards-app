@@ -1,7 +1,7 @@
 // Данный компонент предназначен для декомпозиции
 // Здесь будут useActionState и др. повторяющаяся логика для форм
 
-import { useActionState } from 'react'
+import { useActionState, type FC } from 'react'
 import cls from './EditQuestionPage.module.css'
 import { Loader } from '../../components/Loader'
 import { QuestionForm } from '../../components/QuestionForm'
@@ -11,15 +11,22 @@ import { toast } from 'react-toastify'
 import { dateFormat } from '../../helpers/dateFormat'
 import { useFetch } from '../../hooks/useFetch'
 import { useNavigate } from 'react-router-dom'
+import type {
+	IQuestionCard,
+	IQuestionCardState,
+} from '../../types/global.types'
 
-const editCardAction = async (_prevState, formData) => {
+const editCardAction = async (
+	_prevState: Partial<IQuestionCardState>,
+	formData: FormData,
+) => {
 	try {
 		await delayFn()
 		// console.log("formData", Object.fromEntries(formData));
 		// console.log("formData", formData.get("question"));
 
 		const newQuestion = Object.fromEntries(formData)
-		const resources = newQuestion.resources.trim()
+		const resources = (newQuestion.resources as string).trim()
 		const questionId = newQuestion.questionId
 		const isClearForm = newQuestion.clearForm
 
@@ -46,16 +53,23 @@ const editCardAction = async (_prevState, formData) => {
 		toast.success('The question is edited created!')
 
 		return isClearForm ? {} : question // когда выполнена отправка на сервер, отработал action (createCardAction), если ничего не возвращать, то следующий formState в useActionState становится undefined, поэтому обязательно должно что-то возвращаться
-	} catch (error) {
-		toast.error(error.message)
+	} catch (error: any) {
+		toast.error(error?.message)
 		return {} // значение возвращается, только если выполняется условие isClearForm ? {} : question;, из-за этого возникает ошибка, что question может быть undefined
 	}
 }
 
-export const EditQuestion = ({ initialState = {} }) => {
+export interface IEditQuestionProps {
+	initialState: IQuestionCard
+}
+
+export const EditQuestion: FC<IEditQuestionProps> = ({ initialState }) => {
 	const navigate = useNavigate()
 
-	const [formState, formAction, isPending] = useActionState(editCardAction, {
+	const [formState, formAction, isPending] = useActionState<
+		Partial<IQuestionCardState>,
+		FormData
+	>(editCardAction, {
 		...initialState,
 		clearForm: false,
 	})
@@ -91,7 +105,7 @@ export const EditQuestion = ({ initialState = {} }) => {
 
 				<QuestionForm
 					formAction={formAction}
-					state={formState}
+					cardState={formState}
 					isPending={isPending || isQuestionRemoving}
 					submitBtnText='Edit Question'
 				/>

@@ -1,4 +1,11 @@
-import { useEffect, useState, useRef, useMemo } from 'react'
+import {
+	useEffect,
+	useState,
+	useRef,
+	useMemo,
+	type ChangeEvent,
+	type MouseEvent,
+} from 'react'
 // import cls from "./HomePage.module.css"
 import { API_URL } from '../../constants/global.constants'
 import { QuestionCardList } from '../../components/QuestionCardList'
@@ -6,6 +13,7 @@ import { Loader } from '../../components/Loader'
 import { useFetch } from '../../hooks/useFetch'
 import { SearchInput } from '../../components/SearchInput'
 import { Button } from '../../components/Button'
+import type { IQuestionCardData } from '../../types/global.types'
 import cls from './HomePage.module.css'
 
 const DEFAULT_PER_PAGE = 10
@@ -13,16 +21,16 @@ const DEFAULT_PER_PAGE = 10
 export const HomePage = () => {
 	// большинство хуков React можно вызвать только на верхнем уровне
 	// т.е., например, нельзя вызвать useState внутри getQuestions
-	const [searchParams, setSearchParams] = useState(
+	const [searchParams, setSearchParams] = useState<string>(
 		`?_page=1&_per_page=${DEFAULT_PER_PAGE}`,
 	)
-	const [questions, setQuestions] = useState({})
-	const [searchValue, setSearchValue] = useState('') // управляемый input
-	const [sortSelectValue, setSortSelectValue] = useState('')
-	const controlsContainerRef = useRef()
-	const [countSelectValue, setCountSelectValue] = useState('')
+	const [questions, setQuestions] = useState<IQuestionCardData | null>(null)
+	const [searchValue, setSearchValue] = useState<string>('') // управляемый input
+	const [sortSelectValue, setSortSelectValue] = useState<string>('')
+	const controlsContainerRef = useRef<HTMLDivElement | null>(null)
+	const [countSelectValue, setCountSelectValue] = useState<string>('')
 
-	const getActivePageNumber = () => {
+	const getActivePageNumber = (questions: IQuestionCardData): number | null => {
 		return questions.next === null ? questions.last : questions.next - 1
 	}
 
@@ -76,26 +84,28 @@ export const HomePage = () => {
 	//   console.log("Ref", inputRef.current.value)
 	// }
 
-	const onSearchChangeValueHandler = e => {
+	const onSearchChangeValueHandler = (e: ChangeEvent<HTMLInputElement>): void => {
 		setSearchValue(e.target.value)
 	}
 
-	const onSortSelectChangeHandler = e => {
+	const onSortSelectChangeHandler = (e: ChangeEvent<HTMLSelectElement>): void => {
 		setSortSelectValue(e.target.value)
 
 		setSearchParams(`?_page=1&_per_page=${countSelectValue}&${e.target.value}`)
 	}
 
-	const paginationHandler = e => {
-		if (e.target.tagName === 'BUTTON') {
+	const paginationHandler = (e: MouseEvent<HTMLDivElement>): void => {
+		const targetElement = e.target as HTMLElement
+
+		if (targetElement.tagName === 'BUTTON') {
 			setSearchParams(
-				`?_page=${e.target.textContent}&_per_page=${countSelectValue}&${sortSelectValue}`,
+				`?_page=${targetElement.textContent}&_per_page=${countSelectValue}&${sortSelectValue}`,
 			)
-			controlsContainerRef.current.scrollIntoView({ behavior: 'smooth' }) // у контрола вызываем поле current, у которого вызываем метод js scrollIntoView(), behhavior: "smooth" отвечает за плавность скролла
+			controlsContainerRef.current?.scrollIntoView({ behavior: 'smooth' }) // у контрола вызываем поле current, у которого вызываем метод js scrollIntoView(), behhavior: "smooth" отвечает за плавность скролла
 		}
 	}
 
-	const onCountSelectChangeHandler = e => {
+	const onCountSelectChangeHandler = (e: ChangeEvent<HTMLSelectElement>): void => {
 		setCountSelectValue(e.target.value)
 		setSearchParams(`?_page=1&_per_page=${e.target.value}&${sortSelectValue}`)
 	}
@@ -158,7 +168,7 @@ export const HomePage = () => {
 					<div className={cls.pagintaionContainer} onClick={paginationHandler}>
 						{pagintaion.map(value => {
 							return (
-								<Button key={value} isActive={value === getActivePageNumber()}>
+								<Button key={value} isActive={value === getActivePageNumber(questions as IQuestionCardData)}>
 									{value}
 								</Button>
 							)

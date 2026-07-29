@@ -5,18 +5,19 @@ import { toast } from 'react-toastify'
 import { API_URL } from '../../constants/global.constants'
 import { Loader } from '../../components/Loader'
 import { QuestionForm } from '../../components/QuestionForm'
+import type { IQuestionCardState } from '../../types/global.types'
 
 // createCardAction по умолчанию принимает 2 аргумента, потому что под капотом useActionState кладёт в эту функцию именно 2 аргумента
 // _prevState с нижним подчёркиванием, потому что это значение будет не нужно в данном случае
 // данная функция обозначает логику отправки данных формы на сервер
-const createCardAction = async (_prevState, formData) => {
+const createCardAction = async (_prevState: Partial<IQuestionCardState>, formData: FormData) => {
 	try {
 		await delayFn()
 		// console.log("formData", Object.fromEntries(formData));
 		// console.log("formData", formData.get("question"));
 
 		const newQuestion = Object.fromEntries(formData)
-		const resources = newQuestion.resources.trim()
+		const resources = (newQuestion.resources as string).trim()
 		const isClearForm = newQuestion.clearForm
 
 		const response = await fetch(`${API_URL}/react`, {
@@ -42,8 +43,8 @@ const createCardAction = async (_prevState, formData) => {
 		toast.success('New question is successfully created!')
 
 		return isClearForm ? {} : question // когда выполнена отправка на сервер, отработал action (createCardAction), если ничего не возвращать, то следующий formState в useActionState становится undefined, поэтому обязательно должно что-то возвращаться
-	} catch (error) {
-		toast.error(error.message)
+	} catch (error: any) {
+		toast.error(error?.message)
 		return {} // значение возвращается, только если выполняется условие isClearForm ? {} : question;, из-за этого возникает ошибка, что question может быть undefined
 	}
 }
@@ -55,9 +56,12 @@ const AddQuestionPage = () => {
 	// 2) formAction - функция, которая будет добавляться в форму в атрибут action - когда будет отправляться форма, будет отрабатывать данная функция
 	// 3) isPending - индикатор запроса на сервер
 	// useActionState хорошо подходит для форм
-	const [formState, formAction, isPending] = useActionState(createCardAction, {
-		clearForm: true,
-	}) // поля cleatForm нет в БД, оно придумано, нужно для чекбокса
+	const [formState, formAction, isPending] = useActionState<Partial<IQuestionCardState>, FormData>(
+		createCardAction,
+		{
+			clearForm: true,
+		},
+	) // поля cleatForm нет в БД, оно придумано, нужно для чекбокса
 
 	return (
 		<>
@@ -68,7 +72,7 @@ const AddQuestionPage = () => {
 			<div className={cls.formContainer}>
 				<QuestionForm
 					formAction={formAction}
-					state={formState}
+					cardState={formState}
 					isPending={isPending}
 					submitBtnText='Add Question'
 				/>
