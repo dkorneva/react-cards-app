@@ -1,6 +1,7 @@
-import { memo } from 'react'
+import { memo, type FC } from 'react'
 import cls from './QuestionCardList.module.css'
 import { QuestionCard } from '../QuestionCard'
+import type { IQuestionCard } from '../../types/global.types';
 
 // Сейчас при каждом вводе в input происходит перерендер всех карточек
 // Для того, чтобы избежать этого, используется memo
@@ -13,7 +14,11 @@ memo - это функция в React, которая позволяет про�
 аргументами и возврата результата при повторном вызове функции с теми же аргументами
 */
 
-export const QuestionCardList = memo(({ cards }) => {
+export interface IQuestionCardListProps {
+	cards: IQuestionCard[];
+}
+
+export const QuestionCardList: FC<IQuestionCardListProps> = memo(({ cards }) => {
 	return (
 		<div className={cls.cardList}>
 			{cards.map((card, index) => {
