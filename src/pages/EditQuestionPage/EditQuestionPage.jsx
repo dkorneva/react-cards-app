@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
-import {useParams} from "react-router-dom";
+import { useParams } from 'react-router-dom'
 import { useFetch } from '../../hooks/useFetch'
-import { API_URL } from '../../constants'
+import { API_URL } from '../../constants/global.constants'
 import { Loader } from '../../components/Loader'
-import { EditQuestion } from './EditQuestion';
+import { EditQuestion } from './EditQuestion'
 
 const EditQuestionPage = () => {
 	const { id } = useParams() // вытягиваем id конкретного вопроса, чтобы заполнить данные формы по этому запросу
@@ -23,7 +23,7 @@ const EditQuestionPage = () => {
 	return (
 		<>
 			{isQuestionLoading && <Loader />}
-			{question && <EditQuestion initialState={question}/>}
+			{question && <EditQuestion initialState={question} />}
 		</>
 	)
 }

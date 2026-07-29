@@ -6,7 +6,7 @@ import cls from './EditQuestionPage.module.css'
 import { Loader } from '../../components/Loader'
 import { QuestionForm } from '../../components/QuestionForm'
 import { delayFn } from '../../helpers/delayFn'
-import { API_URL } from '../../constants'
+import { API_URL } from '../../constants/global.constants'
 import { toast } from 'react-toastify'
 import { dateFormat } from '../../helpers/dateFormat'
 import { useFetch } from '../../hooks/useFetch'
@@ -53,26 +53,26 @@ const editCardAction = async (_prevState, formData) => {
 }
 
 export const EditQuestion = ({ initialState = {} }) => {
-  const navigate = useNavigate();
+	const navigate = useNavigate()
 
 	const [formState, formAction, isPending] = useActionState(editCardAction, {
 		...initialState,
 		clearForm: false,
 	})
 
-    const [removeQuestion, isQuestionRemoving] = useFetch(async () => {
-			await fetch(`${API_URL}/react/${initialState.id}`, {
-				method: 'DELETE',
-			})
-			toast.success('The question has been successfully removed!')
-      navigate("/");
+	const [removeQuestion, isQuestionRemoving] = useFetch(async () => {
+		await fetch(`${API_URL}/react/${initialState.id}`, {
+			method: 'DELETE',
 		})
+		toast.success('The question has been successfully removed!')
+		navigate('/')
+	})
 
-    const onRemoveQuestionHandler = () => {
-      const isRemove = confirm("Are you sure?")
+	const onRemoveQuestionHandler = () => {
+		const isRemove = confirm('Are you sure?')
 
-      isRemove && removeQuestion();
-    }
+		isRemove && removeQuestion()
+	}
 
 	return (
 		<>

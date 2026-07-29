@@ -4,64 +4,67 @@ import { Badge } from '../../components/Badge'
 import { Button } from '../../components/Button'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useFetch } from '../../hooks/useFetch'
-import { API_URL, AUTH_STORAGE } from '../../constants'
+import { API_URL, AUTH_STORAGE } from '../../constants/global.constants'
 import { Loader, SmallLoader } from '../../components/Loader'
-import { useAuth } from '../../hooks/useAuth' 
+import { useAuth } from '../../hooks/useAuth'
 
 // поскольку QuestionPage является страницей, она не имеет ни одного пропса
 export const QuestionPage = () => {
 	const checkboxId = useId()
 	const navigate = useNavigate()
-	const {id} = useParams();
+	const { id } = useParams()
 	const [card, setCard] = useState(null)
 	const [isChecked, setIsChecked] = useState(true)
-	const {isAuth, setIsAuth} = useAuth()
+	const { isAuth, setIsAuth } = useAuth()
 
-
-	const levelVariant = () => { return card.level === 1 && card !== null
-		? 'primary'
-		: card.level === 2
-			? 'warning'
-			: 'alert'}
-	const completedVariant = () => {return card.completed ? 'success' : 'primary'}
+	const levelVariant = () => {
+		return card.level === 1 && card !== null
+			? 'primary'
+			: card.level === 2
+				? 'warning'
+				: 'alert'
+	}
+	const completedVariant = () => {
+		return card.completed ? 'success' : 'primary'
+	}
 
 	const [fetchCard, isCardLoading] = useFetch(async () => {
-		const response = await fetch(`${API_URL}/react/${id}`);
-		const data = await response.json();
+		const response = await fetch(`${API_URL}/react/${id}`)
+		const data = await response.json()
 
-		if(!response.ok) {
-			throw new Error(response.statusText);
+		if (!response.ok) {
+			throw new Error(response.statusText)
 		}
 
-		setCard(data);
-	}) 
+		setCard(data)
+	})
 
-	const [updateCard, isCardUpdating] = useFetch(async (isChecked) => {
+	const [updateCard, isCardUpdating] = useFetch(async isChecked => {
 		const response = await fetch(`${API_URL}/react/${id}`, {
-			method: "PATCH",
-			body: JSON.stringify({completed: isChecked}),
-		});
+			method: 'PATCH',
+			body: JSON.stringify({ completed: isChecked }),
+		})
 
-		if(!response.ok) {
-			throw new Error(response.statusText);
+		if (!response.ok) {
+			throw new Error(response.statusText)
 		}
 
-		const data = await response.json();
+		const data = await response.json()
 
-		setCard(data);
+		setCard(data)
 	})
 
 	useEffect(() => {
-		fetchCard();
-	}, []);
+		fetchCard()
+	}, [])
 
 	useEffect(() => {
 		card !== null && setIsChecked(card.completed)
 	}, [card])
 
 	const onCheckboxChangeHandler = () => {
-		setIsChecked(!isChecked);
-		updateCard(!isChecked);
+		setIsChecked(!isChecked)
+		updateCard(!isChecked)
 	}
 
 	return (
@@ -69,7 +72,7 @@ export const QuestionPage = () => {
 		// однако нужно вернуть любую разметку, если card === 0, это условие нарушается
 		// поэтому оборачиваем всё выражение в react element
 		<>
-		{isCardLoading && <Loader />}
+			{isCardLoading && <Loader />}
 			{card !== null && (
 				<div className={cls.container}>
 					<div className={cls.cardLabels}>
@@ -117,13 +120,20 @@ export const QuestionPage = () => {
 						/>
 						<span>mark question as completed</span>
 
-						{isCardUpdating && <SmallLoader/>}
+						{isCardUpdating && <SmallLoader />}
 					</label>
 
-					{isAuth && <Button onClick={() => navigate(`/editquestion/${card.id}`)} isDisabled={isCardUpdating}>
-						Edit
-					</Button>}
-					<Button onClick={() => navigate('/')} isDisabled={isCardUpdating}>Back</Button>
+					{isAuth && (
+						<Button
+							onClick={() => navigate(`/editquestion/${card.id}`)}
+							isDisabled={isCardUpdating}
+						>
+							Edit
+						</Button>
+					)}
+					<Button onClick={() => navigate('/')} isDisabled={isCardUpdating}>
+						Back
+					</Button>
 				</div>
 			)}
 		</>

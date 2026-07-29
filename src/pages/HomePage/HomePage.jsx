@@ -1,11 +1,11 @@
 import { useEffect, useState, useRef, useMemo } from 'react'
 // import cls from "./HomePage.module.css"
-import { API_URL } from '../../constants'
+import { API_URL } from '../../constants/global.constants'
 import { QuestionCardList } from '../../components/QuestionCardList'
 import { Loader } from '../../components/Loader'
 import { useFetch } from '../../hooks/useFetch'
 import { SearchInput } from '../../components/SearchInput'
-import {Button} from '../../components/Button'
+import { Button } from '../../components/Button'
 import cls from './HomePage.module.css'
 
 const DEFAULT_PER_PAGE = 10
@@ -19,12 +19,12 @@ export const HomePage = () => {
 	const [questions, setQuestions] = useState({})
 	const [searchValue, setSearchValue] = useState('') // управляемый input
 	const [sortSelectValue, setSortSelectValue] = useState('')
-  const controlsContainerRef = useRef();
-	const [countSelectValue, setCountSelectValue] = useState("");
+	const controlsContainerRef = useRef()
+	const [countSelectValue, setCountSelectValue] = useState('')
 
-  const getActivePageNumber = () => {
-    return questions.next === null ? questions.last : questions.next - 1;
-  }
+	const getActivePageNumber = () => {
+		return questions.next === null ? questions.last : questions.next - 1
+	}
 
 	// const inputRef = useRef(); // данная ссылка не является состоянием, а представлет из себя ссылку на какой-то элемент, значение данного элемента сохраняется между перерисовками, оно постоянное и не будет сбрасываться
 	// с помощью данного референса можно также управлять скроллом, получать данные у input (например, делать какую-либо константу)
@@ -83,20 +83,20 @@ export const HomePage = () => {
 	const onSortSelectChangeHandler = e => {
 		setSortSelectValue(e.target.value)
 
-		setSearchParams(
-			`?_page=1&_per_page=${countSelectValue}&${e.target.value}`,
-		)
+		setSearchParams(`?_page=1&_per_page=${countSelectValue}&${e.target.value}`)
 	}
 
-  const paginationHandler = (e) => {
-    if (e.target.tagName === "BUTTON") {
-      setSearchParams(`?_page=${e.target.textContent}&_per_page=${countSelectValue}&${sortSelectValue}`)
-      controlsContainerRef.current.scrollIntoView({behavior: "smooth"}); // у контрола вызываем поле current, у которого вызываем метод js scrollIntoView(), behhavior: "smooth" отвечает за плавность скролла
-    }
-  }
+	const paginationHandler = e => {
+		if (e.target.tagName === 'BUTTON') {
+			setSearchParams(
+				`?_page=${e.target.textContent}&_per_page=${countSelectValue}&${sortSelectValue}`,
+			)
+			controlsContainerRef.current.scrollIntoView({ behavior: 'smooth' }) // у контрола вызываем поле current, у которого вызываем метод js scrollIntoView(), behhavior: "smooth" отвечает за плавность скролла
+		}
+	}
 
-	const onCountSelectChangeHandler = (e) => {
-		setCountSelectValue(e.target.value);
+	const onCountSelectChangeHandler = e => {
+		setCountSelectValue(e.target.value)
 		setSearchParams(`?_page=1&_per_page=${e.target.value}&${sortSelectValue}`)
 	}
 
@@ -157,15 +157,12 @@ export const HomePage = () => {
 				pagintaion.length > 1 && (
 					<div className={cls.pagintaionContainer} onClick={paginationHandler}>
 						{pagintaion.map(value => {
-									return (
-										<Button
-											key={value}
-											isActive={value === getActivePageNumber()}
-										>
-											{value}
-										</Button>
-									)
-								})}
+							return (
+								<Button key={value} isActive={value === getActivePageNumber()}>
+									{value}
+								</Button>
+							)
+						})}
 					</div>
 				)
 			)}

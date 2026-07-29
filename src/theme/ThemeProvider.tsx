@@ -5,7 +5,7 @@ import {
 	type FC,
 	type ReactNode,
 } from 'react'
-import { THEME_STORAGE } from '../constants'
+import { THEME_STORAGE } from '../constants/global.constants'
 import { THEME_ENUM, type IThemeContext } from '../types/global.types'
 
 export const ThemeContext = createContext<IThemeContext>({
@@ -24,7 +24,7 @@ export const ThemeProvider: FC<IThemeProviderProps> = ({ children }) => {
 	const [theme, setTheme] = useState<THEME_ENUM>(savedTheme)
 
 	useLayoutEffect(() => {
-		const detectTheme = ():void => {
+		const detectTheme = (): void => {
 			const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches
 
 			if (isDark) {
